@@ -15,7 +15,7 @@ public class AccessProfileManagerEditor : Editor
         AccessProfileManager manager = (AccessProfileManager)target;
 
         EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Access Summary Code Tools", EditorStyles.boldLabel);
+        EditorGUILayout.LabelField("Access Summary Code (ASC) Tools", EditorStyles.boldLabel);
 
         // Text entry box for the code
         //manager.currentAccessSummaryCode = EditorGUILayout.TextField("Current Access Summary Code", manager.currentAccessSummaryCode);

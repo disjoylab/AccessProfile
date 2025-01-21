@@ -12,7 +12,7 @@ public class AccessProfileManager : MonoBehaviour
     public static AccessProfileManager Instance { get; private set; }
 
     // Event triggered when accessibility settings change
-    public static event Action OnAccessibilitySettingsChanged;
+    public static event System.Action<AccessibilitySettings> OnAccessibilitySettingsChanged;
 
     [Tooltip("Current Access Summary Code that summarizes the current settings")]
     public string currentAccessSummaryCode;
@@ -47,8 +47,8 @@ public class AccessProfileManager : MonoBehaviour
     }
 
     // Current settings
-    [SerializeField, Tooltip("Current accessibility settings.")]
-    public static AccessibilitySettings currentAccessProfileSettings = new AccessibilitySettings();
+    [Tooltip("Current accessibility settings.")]
+   public AccessibilitySettings currentAccessProfileSettings = new AccessibilitySettings();
 
     private void Awake()
     {
@@ -62,8 +62,10 @@ public class AccessProfileManager : MonoBehaviour
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Optional, persists between scenes
+            //DontDestroyOnLoad(gameObject); // Optional, persists between scenes
         }
+
+        // Initialize static settings with the Inspector-provided default settings
         currentAccessSummaryCode = EncodeSettings();
     }
 
@@ -78,11 +80,12 @@ public class AccessProfileManager : MonoBehaviour
         currentAccessProfileSettings = newSettings;
         UpdateCodeFromSettings();
         NotifyAccessibilitySettingsChanged();
+        OnAccessibilitySettingsChanged?.Invoke(currentAccessProfileSettings);
     }
 
     private void NotifyAccessibilitySettingsChanged()
     {
-        OnAccessibilitySettingsChanged?.Invoke();
+        OnAccessibilitySettingsChanged?.Invoke(currentAccessProfileSettings);
     }
 
     public void ToggleCaptions(bool enabled)
@@ -157,6 +160,15 @@ public class AccessProfileManager : MonoBehaviour
     private void OnValidate()
     {
         UpdateCodeFromSettings();
+    }
+
+    private void OnDestroy()
+    {
+        // Clean up the singleton instance if this object is destroyed
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 
 }

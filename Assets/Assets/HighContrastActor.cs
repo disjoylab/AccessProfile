@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 [ExecuteInEditMode]
 [DisallowMultipleComponent]
-public class Accessibility : MonoBehaviour
+public class HighContrastActor : MonoBehaviour
 {
     //NEED EDITOR BACKING, SETS CURRENT SIZE AND SUCH AND ASSIGNES A DEFAULT TO THE ACCESIBLE SIZES AND SUCH ON ENABLE
     //HAVE A TEST BUTTON THAT TESTS ALL HIGH CONTRASTS IN EDIT MODE
@@ -56,7 +56,7 @@ public class Accessibility : MonoBehaviour
     }
     private void Start()
     {           
-        //Display(AccessProfileManager.currentAccessProfileSettings);
+        Display();
     }
 
     public void CaptureObjects()
@@ -130,16 +130,24 @@ public class Accessibility : MonoBehaviour
             AccessibleTexture = rawImage.texture;
         }
     }
-    private void OnHighContrastModeChanged()
+    private void OnHighContrastModeChanged(AccessProfileManager.AccessibilitySettings newSettings)
     {
         Display();
-
     }
 
     public void Display()
     {
-        //bool HC = highContrastSettings == HighContrastSettings.ON;
-        bool HC = true; //TEMP
+        AccessProfileManager.AccessibilitySettings currSettings = AccessProfileManager.Instance.GetAccessSettings();
+
+        bool HC;
+        if (currSettings.highContrastModeType != AccessProfileManager.HighContrastModeType.Off)
+        {
+            HC = true;
+        }
+        else
+        {
+            HC = false;
+        }
 
         if (myText != null)
         {

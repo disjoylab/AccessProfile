@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class AccessibityManager : MonoBehaviour
+public class HighContrastManager : MonoBehaviour
 {
-    public static AccessibityManager instance;
+    public static HighContrastManager instance;
     public Sprite AccessibleImage_BLACK;
     public Sprite AccessibleImage_WHITE;
     public Sprite AccessibleImage_BLACK_GRADIENT;
