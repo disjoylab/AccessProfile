@@ -5,6 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class CaptionBackground : MonoBehaviour
 {
+    //TODO: Change this to be "CaptionManager" and integrate with AccessProfile
     public enum SizingMode { Automatic, Manual }
 
     [Header("Background Settings")]
