@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 217950242}
   - component: {fileID: 217950244}
   - component: {fileID: 217950243}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Foe Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -373,6 +373,51 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &339619223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 339619224}
+  - component: {fileID: 339619225}
+  m_Layer: 0
+  m_Name: High Contrast Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &339619224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339619223}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -49.881145, y: -49.09962, z: -0.045865197}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 441046768}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &339619225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339619223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177195ad022c51645b61a0f39fb25a85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hcActive: 0
 --- !u!1 &441046767
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +427,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 441046768}
-  - component: {fileID: 441046769}
   m_Layer: 0
   m_Name: Accessability Manager
   m_TagString: Untagged
@@ -403,27 +447,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 339619224}
   - {fileID: 1262387922}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &441046769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441046767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177195ad022c51645b61a0f39fb25a85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AccessibleImage_BLACK: {fileID: 21300000, guid: 8e846c0397f7cfd42bb6af017c91a94b, type: 3}
-  AccessibleImage_WHITE: {fileID: 21300000, guid: 0416606be5a417947bd0cb602b340baf, type: 3}
-  AccessibleImage_BLACK_GRADIENT: {fileID: 21300000, guid: 7db0c934eb367184b835d5d3bec98caf, type: 3}
-  AccessibleImage_WHITE_GRADIENT: {fileID: 21300000, guid: e7ac8ab5e7aa4a9428b2d7dd71bacd64, type: 3}
-  AccessibleImage_BLACK_WHITE_BORDER: {fileID: 21300000, guid: fdd9d0fb37b9d454c93b05811d7ac6fd, type: 3}
-  AccessibleImage_WHITE_BLACK_BORDER: {fileID: 21300000, guid: 175d436273355fd41baf0b7a147fe7fd, type: 3}
 --- !u!1 &514738910
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,7 +706,7 @@ GameObject:
   - component: {fileID: 871009416}
   - component: {fileID: 871009418}
   - component: {fileID: 871009417}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Player Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -831,11 +858,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1826406651}
   - {fileID: 514738911}
   - {fileID: 251360168}
   - {fileID: 1873179347}
   - {fileID: 139418089}
-  - {fileID: 1826406651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1262387921
@@ -882,13 +909,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1941525b041c4fb3d1623778c133d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAccessSummaryCode: 1BXND
+  currentAccessSummaryCode: 1BXMD
   stagedAccessSummaryCode: 
   currentAccessProfileSettings:
     captionsEnabled: 1
     captionTextSize: 1
     captionFont: 0
-    captionBackground: 1
+    captionBackground: 0
     highContrastModeType: 0
 --- !u!1 &1732300846
 GameObject:
@@ -901,7 +928,7 @@ GameObject:
   - component: {fileID: 1732300847}
   - component: {fileID: 1732300849}
   - component: {fileID: 1732300848}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Friend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1036,7 +1063,7 @@ GameObject:
   - component: {fileID: 1777280351}
   - component: {fileID: 1777280350}
   - component: {fileID: 1777280349}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1155,7 +1182,7 @@ Transform:
   m_GameObject: {fileID: 1826406650}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 22, y: 14, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1201,7 +1228,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -1288,7 +1315,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.59119487, g: 0.2584153, b: 0.2584153, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1311,12 +1338,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 0}
-  OriginalSprite: {fileID: 0}
-  AccessibleSprite: {fileID: 0}
+  mySpriteRenderer: {fileID: 1873179348}
+  OriginalSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  AccessibleSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   rawImage: {fileID: 0}
   OrigninalTexture: {fileID: 0}
   AccessibleTexture: {fileID: 0}
-  OriginalSpriteColor: {r: 1, g: 1, b: 1, a: 1}
+  OriginalSpriteColor: {r: 0, g: 0, b: 0, a: 1}
   AccessibleSpriteColor: {r: 1, g: 1, b: 1, a: 1}
   myText: {fileID: 0}
   myTMP: {fileID: 0}
@@ -1345,7 +1373,7 @@ GameObject:
   - component: {fileID: 1974358578}
   - component: {fileID: 1974358577}
   - component: {fileID: 1974358576}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Caption
   m_TagString: Untagged
   m_Icon: {fileID: 0}

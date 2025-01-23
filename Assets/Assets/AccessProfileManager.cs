@@ -9,10 +9,10 @@ using static UnityEngine.GraphicsBuffer;
 public class AccessProfileManager : MonoBehaviour
 {
     // Singleton instance for global access
-    public static AccessProfileManager Instance { get; private set; }
+    public static AccessProfileManager Instance { get; set; }
 
     // Event triggered when accessibility settings change
-    public static event System.Action<AccessibilitySettings> OnAccessibilitySettingsChanged;
+    public static event Action<AccessibilitySettings> OnAccessibilitySettingsChanged;
 
     [Tooltip("Current Access Summary Code that summarizes the current settings")]
     public string currentAccessSummaryCode;
@@ -80,7 +80,6 @@ public class AccessProfileManager : MonoBehaviour
         currentAccessProfileSettings = newSettings;
         UpdateCodeFromSettings();
         NotifyAccessibilitySettingsChanged();
-        OnAccessibilitySettingsChanged?.Invoke(currentAccessProfileSettings);
     }
 
     private void NotifyAccessibilitySettingsChanged()
@@ -114,6 +113,8 @@ public class AccessProfileManager : MonoBehaviour
 
     public void DecodeSettings(string code)
     {
+        AccessibilitySettings tempSettings = new AccessibilitySettings();
+
         // Decodes a 5-digit alphanumeric code and updates the current accessibility settings.
         if (code.Length != 5)
         {
@@ -123,13 +124,14 @@ public class AccessProfileManager : MonoBehaviour
 
         try
         {
-            currentAccessProfileSettings.captionsEnabled = code[0] == '1';
-            currentAccessProfileSettings.captionTextSize = (CaptionTextSize)(code[1] - 'A');
-            currentAccessProfileSettings.captionFont = (CaptionFont)(code[2] - 'X');
-            currentAccessProfileSettings.captionBackground = (CaptionBackground)(code[3] - 'M');
-            currentAccessProfileSettings.highContrastModeType = (HighContrastModeType)(code[4] - 'D');
+            tempSettings.captionsEnabled = code[0] == '1';
+            tempSettings.captionTextSize = (CaptionTextSize)(code[1] - 'A');
+            tempSettings.captionFont = (CaptionFont)(code[2] - 'X');
+            tempSettings.captionBackground = (CaptionBackground)(code[3] - 'M');
+            tempSettings.highContrastModeType = (HighContrastModeType)(code[4] - 'D');
 
-            //NotifyAccessibilitySettingsChanged();
+            UpdateAccessSettings(tempSettings);
+
         }
         catch (Exception ex)
         {

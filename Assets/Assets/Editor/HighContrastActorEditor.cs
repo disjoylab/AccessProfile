@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class NewBehaviourScript : Editor
 {
     HighContrastActor hcActor;
-    static bool HighContrastEditMode;
+    bool HighContrastActive;
 
 #if UNITY_EDITOR
     void OnEnable()
@@ -25,6 +25,11 @@ public class NewBehaviourScript : Editor
 
     public override void OnInspectorGUI()
     {
+        if (HighContrastManager.instance == null)
+        {
+            HighContrastManager.instance = GameObject.FindObjectOfType<HighContrastManager>();
+        }
+
         if (Application.isPlaying)
         {
             return;
@@ -55,61 +60,9 @@ public class NewBehaviourScript : Editor
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(5);
              
-                hcActor.AccessibleSpriteColor = EditorGUILayout.ColorField("Accessible Color: ", hcActor.AccessibleSpriteColor);
+            hcActor.AccessibleSpriteColor = EditorGUILayout.ColorField("Accessible Color: ", hcActor.AccessibleSpriteColor);
               
-            
-
-            GUILayout.Space(10);
-
-
-            EditorGUILayout.BeginHorizontal();
-            if (HighContrastManager.instance != null)
-            {
-                if (GUILayout.Button("ORIG [BLACK]", GUILayout.Width(150), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.black;
-                    hcActor.AccessibleSprite = hcActor.OriginalSprite;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_BLACK.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleSprite = HighContrastManager.instance.AccessibleImage_BLACK;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_WHITE.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleSprite = HighContrastManager.instance.AccessibleImage_WHITE;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_BLACK_GRADIENT.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleSprite = HighContrastManager.instance.AccessibleImage_BLACK_GRADIENT;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_WHITE_GRADIENT.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleSprite = HighContrastManager.instance.AccessibleImage_WHITE_GRADIENT;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_BLACK_WHITE_BORDER.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleSprite = HighContrastManager.instance.AccessibleImage_BLACK_WHITE_BORDER;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_WHITE_BLACK_BORDER.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleSprite = HighContrastManager.instance.AccessibleImage_WHITE_BLACK_BORDER;
-                    repaint = true;
-                }
-            }
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(5);
+           
         }
         //RAW IMAGE
         if ( hcActor.rawImage != null)
@@ -135,59 +88,6 @@ public class NewBehaviourScript : Editor
 
             hcActor.AccessibleSpriteColor = EditorGUILayout.ColorField("Accessible Color: ", hcActor.AccessibleSpriteColor);
 
-
-
-            GUILayout.Space(10);
-
-
-            EditorGUILayout.BeginHorizontal();
-            if (HighContrastManager.instance != null)
-            {
-                if (GUILayout.Button("ORIG [BLACK]", GUILayout.Width(150), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.black;
-                    hcActor.AccessibleTexture = hcActor.OrigninalTexture;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_BLACK.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleTexture = HighContrastManager.instance.AccessibleImage_BLACK.texture;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_WHITE.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleTexture = HighContrastManager.instance.AccessibleImage_WHITE.texture;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_BLACK_GRADIENT.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleTexture = HighContrastManager.instance.AccessibleImage_BLACK_GRADIENT.texture;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_WHITE_GRADIENT.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleTexture = HighContrastManager.instance.AccessibleImage_WHITE_GRADIENT.texture;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_BLACK_WHITE_BORDER.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleTexture = HighContrastManager.instance.AccessibleImage_BLACK_WHITE_BORDER.texture;
-                    repaint = true;
-                }
-                if (GUILayout.Button(HighContrastManager.instance.AccessibleImage_WHITE_BLACK_BORDER.texture, GUILayout.Width(40), GUILayout.Height(40)))
-                {
-                    hcActor.AccessibleSpriteColor = Color.white;
-                    hcActor.AccessibleTexture = HighContrastManager.instance.AccessibleImage_WHITE_BLACK_BORDER.texture;
-                    repaint = true;
-                }
-            }
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(5);
         }
 
         //TEXT
@@ -251,21 +151,51 @@ public class NewBehaviourScript : Editor
             hcActor.AccessibleTMPSize = EditorGUILayout.FloatField("Accessible Size: ", hcActor.AccessibleTMPSize);
         }
 
-
-        GUILayout.Space(20);
-        EditorGUILayout.LabelField("VIEW");
-        GUILayout.Space(5);
-        if (GUILayout.Button((HighContrastEditMode ? "ACCESSIBLE" : "ORIGINAL")))
+        //Sprite Renderer
+        if (hcActor.mySpriteRenderer != null)
         {
-            HighContrastEditMode = !HighContrastEditMode;
-            //AccessProfileManager.NotifyAccessibilitySettingsChanged?.Invoke();
-            //SettingsManager.HighContrastModeChanged?.Invoke(HighContrastEditMode ? HighContrastSettings.ON : HighContrastSettings.OFF);
-            repaint = true;
+            GUILayout.Space(10);
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Original Image");
+            hcActor.OriginalSprite =
+           (Sprite)EditorGUILayout.ObjectField(hcActor.OriginalSprite, typeof(Sprite), false, GUILayout.Height(EditorGUIUtility.singleLineHeight));
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            hcActor.OriginalSpriteColor = EditorGUILayout.ColorField("Original Color: ", hcActor.OriginalSpriteColor);
+
+            GUILayout.Space(25);
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Accessable Image");
+            hcActor.AccessibleSprite =
+           (Sprite)EditorGUILayout.ObjectField(hcActor.AccessibleSprite, typeof(Sprite), false, GUILayout.Height(EditorGUIUtility.singleLineHeight));
+            EditorGUILayout.EndHorizontal();
+            GUILayout.Space(5);
+
+            hcActor.AccessibleSpriteColor = EditorGUILayout.ColorField("Accessible Color: ", hcActor.AccessibleSpriteColor);
         }
 
         GUILayout.Space(20);
+        GUILayout.Toggle(HighContrastManager.instance.hcActive,"Is High Contrast Mode Active?");
+
+        // //Code to control High contrast mode from Actor
+        //GUILayout.Space(20);
+        //EditorGUILayout.LabelField("VIEW");
+        //GUILayout.Space(5);
+        //if (GUILayout.Button((HighContrastEditMode ? "ACCESSIBLE" : "ORIGINAL")))
+        //{
+        //   HighContrastEditMode = !HighContrastEditMode;
+        //AccessProfileManager.NotifyAccessibilitySettingsChanged?.Invoke();
+        //SettingsManager.HighContrastModeChanged?.Invoke(HighContrastEditMode ? HighContrastSettings.ON : HighContrastSettings.OFF);
+        //   repaint = true;
+        //}
+
+        //GUILayout.Space(20);
         //accessibility.Display(HighContrastEditMode ? HighContrastSettings.ON : HighContrastSettings.OFF);
-        GUILayout.Space(10);
+        //GUILayout.Space(10);
+
+
         if (GUILayout.Button("REPAINT"))
         {
             repaint = true;
@@ -277,6 +207,8 @@ public class NewBehaviourScript : Editor
             EditorWindow view = EditorWindow.GetWindow<SceneView>();
             view.Repaint();
         }
+
+        
     }
 
     private void CheckObjectsHaveBeenCaptured()

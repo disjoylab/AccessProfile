@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class HighContrastActor : MonoBehaviour
     //NEEDS RECT TRANSFORM
 
     public Image image;
+    public SpriteRenderer mySpriteRenderer;
 
     public Sprite OriginalSprite;
     public Sprite AccessibleSprite;
@@ -48,11 +50,11 @@ public class HighContrastActor : MonoBehaviour
 
     private void OnEnable()
     {
-        AccessProfileManager.OnAccessibilitySettingsChanged += OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
+        HighContrastManager.OnHighContrastAccessSettingChanged += OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
     }
     private void OnDisable()
     {
-        AccessProfileManager.OnAccessibilitySettingsChanged -= OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
+        HighContrastManager.OnHighContrastAccessSettingChanged -= OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
     }
     private void Start()
     {           
@@ -69,6 +71,7 @@ public class HighContrastActor : MonoBehaviour
             myText = gameObject.GetComponent<Text>();
             myTMP = gameObject.GetComponent<TextMeshPro>();
             myTMPuGui = gameObject.GetComponent<TextMeshProUGUI>();
+            mySpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         }        
     }
 
@@ -103,6 +106,11 @@ public class HighContrastActor : MonoBehaviour
         {
             OrigninalTexture = rawImage.texture;
         }
+        if (mySpriteRenderer != null)
+        {
+            OriginalSprite = mySpriteRenderer.sprite;
+            OriginalSpriteColor = mySpriteRenderer.color;
+        }
     }
     public void SetAccessbileDefaults()
     {
@@ -129,15 +137,25 @@ public class HighContrastActor : MonoBehaviour
         {
             AccessibleTexture = rawImage.texture;
         }
+        if (mySpriteRenderer != null)
+        {
+            AccessibleSprite = mySpriteRenderer.sprite;
+        }
     }
-    private void OnHighContrastModeChanged(AccessProfileManager.AccessibilitySettings newSettings)
+    private void OnHighContrastModeChanged(bool isActive)
     {
         Display();
     }
 
     public void Display()
     {
+        if (AccessProfileManager.Instance == null)
+        {
+            AccessProfileManager.Instance = GameObject.FindObjectOfType<AccessProfileManager>();
+        }
+
         AccessProfileManager.AccessibilitySettings currSettings = AccessProfileManager.Instance.GetAccessSettings();
+
 
         bool HC;
         if (currSettings.highContrastModeType != AccessProfileManager.HighContrastModeType.Off)
@@ -189,6 +207,15 @@ public class HighContrastActor : MonoBehaviour
              //   image.type = HasBorder ? Image.Type.Sliced : Image.Type.Simple;
             }
             rawImage.color = HC ? AccessibleSpriteColor : OriginalSpriteColor;
+        }
+        if (mySpriteRenderer != null)
+        {
+            var SpriteToSet = HC ? AccessibleSprite : OriginalSprite;
+            if (SpriteToSet != mySpriteRenderer.sprite && SpriteToSet != null)
+            {
+                mySpriteRenderer.sprite = SpriteToSet;
+            }
+            mySpriteRenderer.color = HC ? AccessibleSpriteColor : OriginalSpriteColor;
         }
     }
 }
