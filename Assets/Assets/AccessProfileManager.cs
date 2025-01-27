@@ -21,7 +21,7 @@ public class AccessProfileManager : MonoBehaviour
     public enum CaptionTextSize { Small, Medium, Large }
     public enum CaptionFont { SansSerif, Serif }
     public enum CaptionBackground { None, SemiOpaque, Opaque }
-    public enum HighContrastModeType { Off, DarkMode, LightMode }    
+    public enum HighContrastModeType { Off, On }    
 
     [Tooltip("The Access Summary Code that is staged. Settings will update to match this code when you click the button below")]
     public string stagedAccessSummaryCode;
@@ -162,6 +162,7 @@ public class AccessProfileManager : MonoBehaviour
     private void OnValidate()
     {
         UpdateCodeFromSettings();
+        NotifyAccessibilitySettingsChanged();
     }
 
     private void OnDestroy()

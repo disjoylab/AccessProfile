@@ -9,6 +9,7 @@ public class HighContrastManager : MonoBehaviour
 {
     public static HighContrastManager instance;
     public static event Action<bool> OnHighContrastAccessSettingChanged;
+    [HideInInspector]
     public bool _hcActive; // Backing field for hcActive
 
     public bool hcActive 
@@ -33,12 +34,18 @@ public class HighContrastManager : MonoBehaviour
     }
     private void OnDisable()
     {
-        AccessProfileManager.OnAccessibilitySettingsChanged -= OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
+        AccessProfileManager.OnAccessibilitySettingsChanged -= OnHighContrastModeChanged; //Unsubscribe to Accessibility Settings Being Changed
     }
     private void Awake()
     {
         instance = this;
+        //Check to see if instance of manager exists, if not, create it
+        if (AccessProfileManager.Instance == null)
+        {
+            AccessProfileManager.Instance = GameObject.FindObjectOfType<AccessProfileManager>();
+        }
 
+        //Set high contrast mode status based on access profile
         if (AccessProfileManager.Instance.currentAccessProfileSettings.highContrastModeType != AccessProfileManager.HighContrastModeType.Off)
         {
             hcActive = true;
@@ -51,9 +58,9 @@ public class HighContrastManager : MonoBehaviour
 
     private void OnHighContrastModeChanged(AccessProfileManager.AccessibilitySettings newSettings)
     {
+
         // Update HCActive based on the high contrast mode type
-        hcActive = (newSettings.highContrastModeType == HighContrastModeType.DarkMode ||
-                    newSettings.highContrastModeType == HighContrastModeType.LightMode);
+        hcActive = (newSettings.highContrastModeType != HighContrastModeType.Off);
     }
 
 }

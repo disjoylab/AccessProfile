@@ -215,7 +215,6 @@ public class NewBehaviourScript : Editor
     {
         if (!hcActor.ObjectsCaptured)
         {
-            Debug.Log("Capturing Objects");
             hcActor.CaptureObjects();
             hcActor.CaptureOriginals();
             hcActor.SetAccessbileDefaults();
