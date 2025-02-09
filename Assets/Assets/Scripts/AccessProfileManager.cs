@@ -11,8 +11,11 @@ public class AccessProfileManager : MonoBehaviour
     // Singleton instance for global access
     public static AccessProfileManager Instance { get; set; }
 
+    // Base36 encoding utility functions (0-9, A-Z)
+    private const string BASE36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
     // Event triggered when accessibility settings change
-    public static event Action<AccessibilitySettings> OnAccessibilitySettingsChanged;
+    public static event Action<AccessProfileSettings> OnAccessProfileChanged;
 
     [Tooltip("Current Access Summary Code that summarizes the current settings")]
     public string currentAccessSummaryCode;
@@ -28,7 +31,7 @@ public class AccessProfileManager : MonoBehaviour
 
     // Accessibility settings class
     [Serializable]
-    public class AccessibilitySettings
+    public class AccessProfileSettings
     {
         [Tooltip("Enable or disable captions.")]
         public bool captionsEnabled = true;
@@ -48,9 +51,9 @@ public class AccessProfileManager : MonoBehaviour
 
     // Current settings
     [Tooltip("Current accessibility settings.")]
-   public AccessibilitySettings currentAccessProfileSettings = new AccessibilitySettings();
+   public AccessProfileSettings currentAccessProfileSettings = new AccessProfileSettings();
 
-    private void Awake()
+    private void OnEnable()
     {
         // Enforce singleton pattern
         if (Application.isPlaying)
@@ -69,13 +72,13 @@ public class AccessProfileManager : MonoBehaviour
         currentAccessSummaryCode = EncodeSettings();
     }
 
-    public AccessibilitySettings GetAccessSettings()
+    public AccessProfileSettings GetAccessSettings()
     {
         return currentAccessProfileSettings;
     }
 
 
-    public void UpdateAccessSettings(AccessibilitySettings newSettings)
+    public void UpdateAccessProfileSettings(AccessProfileSettings newSettings)
     {
         currentAccessProfileSettings = newSettings;
         UpdateCodeFromSettings();
@@ -84,54 +87,44 @@ public class AccessProfileManager : MonoBehaviour
 
     private void NotifyAccessibilitySettingsChanged()
     {
-        OnAccessibilitySettingsChanged?.Invoke(currentAccessProfileSettings);
-    }
-
-    public void ToggleCaptions(bool enabled)
-    {
-        currentAccessProfileSettings.captionsEnabled = enabled;
-        NotifyAccessibilitySettingsChanged();
-    }
-
-    public void SetHighContrastModeType(HighContrastModeType modeType)
-    {
-        currentAccessProfileSettings.highContrastModeType = modeType;
-        NotifyAccessibilitySettingsChanged();
+        OnAccessProfileChanged?.Invoke(currentAccessProfileSettings);
     }
 
     public string EncodeSettings()
     {
-        // Encodes the current accessibility settings into a 5-digit alphanumeric code.
-        char captionsFlag = currentAccessProfileSettings.captionsEnabled ? '1' : '0';
-        char textSize = (char)('A' + (int)currentAccessProfileSettings.captionTextSize);
-        char font = (char)('X' + (int)currentAccessProfileSettings.captionFont);
-        char background = (char)('M' + (int)currentAccessProfileSettings.captionBackground);
-        char contrastMode = (char)('D' + (int)currentAccessProfileSettings.highContrastModeType);
+        //Encode settings into 2-digit compressed preference code
+        int value = 0;
 
-        return $"{captionsFlag}{textSize}{font}{background}{contrastMode}";
+        value |= (currentAccessProfileSettings.captionsEnabled ? 1 : 0) << 6;
+        value |= ((int)currentAccessProfileSettings.captionTextSize & 0b11) << 4;
+        value |= ((int)currentAccessProfileSettings.captionFont & 0b1) << 3;
+        value |= ((int)currentAccessProfileSettings.captionBackground & 0b11) << 1;
+        value |= (currentAccessProfileSettings.highContrastModeType == HighContrastModeType.On ? 1 : 0);
+
+        // Convert to Base36 (0-9, A-Z)
+        return Base36Encode(value);
     }
 
     public void DecodeSettings(string code)
     {
-        AccessibilitySettings tempSettings = new AccessibilitySettings();
-
-        // Decodes a 5-digit alphanumeric code and updates the current accessibility settings.
-        if (code.Length != 5)
+        if (code.Length != 2)
         {
-            Debug.LogError("Invalid code. It must be exactly 5 characters long.");
+            Debug.LogError("Invalid code. It must be exactly 2 characters long.");
             return;
         }
 
         try
         {
-            tempSettings.captionsEnabled = code[0] == '1';
-            tempSettings.captionTextSize = (CaptionTextSize)(code[1] - 'A');
-            tempSettings.captionFont = (CaptionFont)(code[2] - 'X');
-            tempSettings.captionBackground = (CaptionBackground)(code[3] - 'M');
-            tempSettings.highContrastModeType = (HighContrastModeType)(code[4] - 'D');
+            int value = Base36Decode(code);
+            AccessProfileSettings tempSettings = new AccessProfileSettings();
 
-            UpdateAccessSettings(tempSettings);
+            tempSettings.captionsEnabled = (value & (1 << 6)) != 0;
+            tempSettings.captionTextSize = (CaptionTextSize)((value >> 4) & 0b11);
+            tempSettings.captionFont = (CaptionFont)((value >> 3) & 0b1);
+            tempSettings.captionBackground = (CaptionBackground)((value >> 1) & 0b11);
+            tempSettings.highContrastModeType = (HighContrastModeType)(value & 0b1);
 
+            UpdateAccessProfileSettings(tempSettings);
         }
         catch (Exception ex)
         {
@@ -172,6 +165,18 @@ public class AccessProfileManager : MonoBehaviour
         {
             Instance = null;
         }
+    }
+
+    private string Base36Encode(int value)
+    {
+        char first = BASE36[value / 36];
+        char second = BASE36[value % 36];
+        return $"{first}{second}";
+    }
+
+    private int Base36Decode(string encoded)
+    {
+        return (BASE36.IndexOf(encoded[0]) * 36) + BASE36.IndexOf(encoded[1]);
     }
 
 }

@@ -177,7 +177,7 @@ public class NewBehaviourScript : Editor
         }
 
         GUILayout.Space(20);
-        GUILayout.Toggle(HighContrastManager.instance.hcActive,"Is High Contrast Mode Active?");
+        GUILayout.Toggle(HighContrastManager.hcActive,"Is High Contrast Mode Active?");
 
         // //Code to control High contrast mode from Actor
         //GUILayout.Space(20);

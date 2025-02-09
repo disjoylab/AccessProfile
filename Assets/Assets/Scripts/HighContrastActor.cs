@@ -50,11 +50,11 @@ public class HighContrastActor : MonoBehaviour
 
     private void OnEnable()
     {
-        HighContrastManager.OnHighContrastAccessSettingChanged += OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
+        HighContrastManager.OnHighContrastSettingChanged += OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
     }
     private void OnDisable()
     {
-        HighContrastManager.OnHighContrastAccessSettingChanged -= OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
+        HighContrastManager.OnHighContrastSettingChanged -= OnHighContrastModeChanged; //Subscribe to Accessibility Settings Being Changed
     }
     private void Start()
     {           
@@ -149,23 +149,7 @@ public class HighContrastActor : MonoBehaviour
 
     public void Display()
     {
-        if (AccessProfileManager.Instance == null)
-        {
-            AccessProfileManager.Instance = GameObject.FindObjectOfType<AccessProfileManager>();
-        }
-
-        AccessProfileManager.AccessibilitySettings currSettings = AccessProfileManager.Instance.GetAccessSettings();
-
-
-        bool HC;
-        if (currSettings.highContrastModeType != AccessProfileManager.HighContrastModeType.Off)
-        {
-            HC = true;
-        }
-        else
-        {
-            HC = false;
-        }
+        bool HC = HighContrastManager.hcActive;
 
         if (myText != null)
         {
