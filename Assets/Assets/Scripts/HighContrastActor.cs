@@ -44,6 +44,9 @@ public class HighContrastActor : MonoBehaviour
     public float OriginalTMPSize;
     public float AccessibleTMPSize;
     public bool OriginalTMP_ColorGradient;
+    public Camera myCamera;
+    public Color OriginalBackgroundColor;
+    public Color AccessibleBackgroundColor = Color.black;
 
     [HideInInspector]
     public bool ObjectsCaptured;
@@ -72,6 +75,7 @@ public class HighContrastActor : MonoBehaviour
             myTMP = gameObject.GetComponent<TextMeshPro>();
             myTMPuGui = gameObject.GetComponent<TextMeshProUGUI>();
             mySpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+            myCamera = gameObject.GetComponent<Camera>();
         }        
     }
 
@@ -111,6 +115,10 @@ public class HighContrastActor : MonoBehaviour
             OriginalSprite = mySpriteRenderer.sprite;
             OriginalSpriteColor = mySpriteRenderer.color;
         }
+        if (mySpriteRenderer != null)
+        {
+            AccessibleSprite = mySpriteRenderer.sprite;
+        }
     }
     public void SetAccessbileDefaults()
     {
@@ -140,6 +148,9 @@ public class HighContrastActor : MonoBehaviour
         if (mySpriteRenderer != null)
         {
             AccessibleSprite = mySpriteRenderer.sprite;
+        }
+        if (myCamera != null) {
+            AccessibleBackgroundColor = myCamera.backgroundColor;
         }
     }
     private void OnHighContrastModeChanged(bool isActive)
@@ -200,6 +211,10 @@ public class HighContrastActor : MonoBehaviour
                 mySpriteRenderer.sprite = SpriteToSet;
             }
             mySpriteRenderer.color = HC ? AccessibleSpriteColor : OriginalSpriteColor;
+        }
+        if (myCamera != null)
+        {
+            myCamera.backgroundColor = HC ? AccessibleBackgroundColor : OriginalBackgroundColor;
         }
     }
 }
