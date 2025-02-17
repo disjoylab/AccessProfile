@@ -176,6 +176,21 @@ public class NewBehaviourScript : Editor
             hcActor.AccessibleSpriteColor = EditorGUILayout.ColorField("Accessible Color: ", hcActor.AccessibleSpriteColor);
         }
 
+        //Camera
+        if (hcActor.myCamera != null)
+        {
+            GUILayout.Space(10);
+            EditorGUILayout.BeginHorizontal();
+            hcActor.OriginalBackgroundColor = EditorGUILayout.ColorField("Original Color: ", hcActor.OriginalBackgroundColor);
+            EditorGUILayout.EndHorizontal();
+            
+            GUILayout.Space(5);
+
+            EditorGUILayout.BeginHorizontal();
+            hcActor.AccessibleBackgroundColor = EditorGUILayout.ColorField("Accessible Color: ", hcActor.AccessibleBackgroundColor);
+            EditorGUILayout.EndHorizontal();
+        }
+
         GUILayout.Space(20);
         GUILayout.Toggle(HighContrastManager.hcActive,"Is High Contrast Mode Active?");
 

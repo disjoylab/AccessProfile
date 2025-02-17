@@ -409,6 +409,9 @@ MonoBehaviour:
   OriginalTMPSize: 0
   AccessibleTMPSize: 0
   OriginalTMP_ColorGradient: 0
+  myCamera: {fileID: 0}
+  OriginalBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  AccessibleBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   ObjectsCaptured: 1
 --- !u!1 &339619223
 GameObject:
@@ -607,6 +610,9 @@ MonoBehaviour:
   OriginalTMPSize: 0
   AccessibleTMPSize: 0
   OriginalTMP_ColorGradient: 0
+  myCamera: {fileID: 0}
+  OriginalBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  AccessibleBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   ObjectsCaptured: 1
 --- !u!1 &519420028
 GameObject:
@@ -619,6 +625,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -644,7 +651,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.83571225, g: 0.71675867, b: 0.8584906, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -700,6 +707,45 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f374b162258c2fe47a563175c08444cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  mySpriteRenderer: {fileID: 0}
+  OriginalSprite: {fileID: 0}
+  AccessibleSprite: {fileID: 0}
+  rawImage: {fileID: 0}
+  OrigninalTexture: {fileID: 0}
+  AccessibleTexture: {fileID: 0}
+  OriginalSpriteColor: {r: 1, g: 1, b: 1, a: 1}
+  AccessibleSpriteColor: {r: 1, g: 1, b: 1, a: 1}
+  myText: {fileID: 0}
+  myTMP: {fileID: 0}
+  myTMPuGui: {fileID: 0}
+  OriginalFont: {fileID: 0}
+  AccessibleFont: {fileID: 0}
+  OriginalTextSize: 0
+  AccessibleTextSize: 0
+  OriginalTextColor: {r: 0, g: 0, b: 0, a: 0}
+  AccessibleTextColor: {r: 1, g: 1, b: 1, a: 1}
+  OriginalTMPFont: {fileID: 0}
+  AccessibleTMPFont: {fileID: 0}
+  OriginalTMPSize: 0
+  AccessibleTMPSize: 0
+  OriginalTMP_ColorGradient: 0
+  myCamera: {fileID: 519420031}
+  OriginalBackgroundColor: {r: 0.83571225, g: 0.71675867, b: 0.8584906, a: 0}
+  AccessibleBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  ObjectsCaptured: 1
 --- !u!1 &645754154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1662,6 +1708,9 @@ MonoBehaviour:
   OriginalTMPSize: 0
   AccessibleTMPSize: 0
   OriginalTMP_ColorGradient: 0
+  myCamera: {fileID: 0}
+  OriginalBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  AccessibleBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
   ObjectsCaptured: 1
 --- !u!1 &1974358574
 GameObject:
